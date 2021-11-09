@@ -2,7 +2,9 @@ package com.example.cupcake.model
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -23,7 +25,10 @@ class OrderViewModel : ViewModel() {
     val date: LiveData<String> = _date
 
     private var _price = MutableLiveData<Double>()
-    val price: LiveData<Double> = _price
+    /** 用transformations.map() ＆ NumberFormat 處理livedata格式化輸出 */
+    val price: LiveData<String> = Transformations.map(_price){
+        NumberFormat.getCurrencyInstance().format(it)
+    }
 
     val dateOptions = getPickupOptions()
 
@@ -42,6 +47,7 @@ class OrderViewModel : ViewModel() {
         _flavor.value = desiredFlavor
     }
 
+    //如有重訂日期，則重新計算總金額updatePrice
     fun setDate(pickupDate: String){
         _date.value = pickupDate
         updatePrice()
