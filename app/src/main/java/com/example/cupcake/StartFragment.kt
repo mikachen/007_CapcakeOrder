@@ -61,7 +61,7 @@ class StartFragment : Fragment() {
         sharedViewModel.setQuantity(quantity)
 
         //set the default flavor as Vanilla if no flavor is set, before navigating to the flavor fragment.
-        if (sharedViewModel.hasNoFlavorSet()){
+        if (sharedViewModel.hasNoFlavorSet()) {
             sharedViewModel.setFlavor(getString(R.string.vanilla))
         }
         findNavController().navigate(R.id.action_startFragment_to_flavorFragment)
